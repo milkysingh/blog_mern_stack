@@ -1,0 +1,5 @@
+export default {
+  FETCH_User: "FETCH_USER",
+  GET_ALL_BLOGS: "GET_ALL_BLOGS",
+  FETCH_BLOG: "FETCH_BLOG"
+};
