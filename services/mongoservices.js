@@ -73,10 +73,19 @@ const findBlog = async payload => {
     throw error;
   }
 };
+const removeBlog = async payload => {
+  try {
+    const blog = await Blog.findByIdAndRemove(payload);
+    return blog;
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   findUser,
   addNewUser,
   addNewBlog,
   getAllBlogs,
-  findBlog
+  findBlog,
+  removeBlog
 };
