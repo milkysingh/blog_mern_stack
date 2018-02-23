@@ -6,9 +6,8 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 const BlogFormReview = ({ onCancel, formValues, history }) => {
   const uploadBlog = async values => {
-    const res = await axios.post("/api/newBlog", values);
-    console.log(res);
-    history.push("/allBlogs");
+    await axios.post("/api/newBlog", values);
+    history.push("/myBlogs");
   };
 
   const renderFields = () => {

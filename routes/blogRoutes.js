@@ -1,16 +1,17 @@
 const MongoServices = require("../services/mongoservices");
 const requireLoginMiddleware = require("../middlewares/requireLogin");
 module.exports = app => {
-  app.get("/api/getAllBlogs", requireLoginMiddleware, async (req, res) => {
+  app.get("/api/myBlogs", requireLoginMiddleware, async (req, res) => {
     const blogs = await MongoServices.getAllBlogs(req.user._id);
     res.send(blogs);
   });
   app.post("/api/newBlog", requireLoginMiddleware, async (req, res) => {
-    const { title, body } = req.body;
+    const { title, body, tag } = req.body;
     const newBlog = {
       title,
       body,
-      id: "5a829b0d9acd20105a608fbb"
+      id: req.user._id,
+      tag
     };
     const blog = await MongoServices.addNewBlog(newBlog);
     if (blog) {
@@ -21,7 +22,6 @@ module.exports = app => {
   app.get("/api/fetchBlog/:id", async (req, res) => {
     const blogId = req.params.id;
     const blog = await MongoServices.findBlog(blogId);
-
     res.send(blog);
   });
 
@@ -29,5 +29,12 @@ module.exports = app => {
     console.log("id :", req.params.id);
     const response = MongoServices.removeBlog(req.params.id);
     res.status(200).send({ success: "Blog has been sucessully removed" });
+  });
+
+  app.get("/api/fetchBlogs", async (req, res) => {
+    const tag = req.query.tags.split(",");
+    console.log(tag);
+    const blogs = await MongoServices.findBlogsByTag(tag);
+    res.status(200).send(blogs);
   });
 };

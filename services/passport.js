@@ -31,7 +31,6 @@ passport.use(
         googleID: profile.id
       });
       if (existingUser) {
-        console.log("Hello");
         return done(null, existingUser);
       }
       const user = await MongoServices.addNewUser({

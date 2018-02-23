@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
 class Header extends Component {
   contentRenderer = () => {
     switch (this.props.auth) {
       case false:
         return (
           <li>
-            <a href="/auth/google">Login With Google</a>
+            <a href="/auth/google" s>
+              Login With Google
+            </a>
           </li>
         );
       case null:
         return null;
       default:
         return [
+          <li key={3}>
+            <Link to="/myBlogs">My Blogs</Link>
+          </li>,
           <li key={1} style={{ margin: "0 10px" }}>
             <Link to="/newBlog">create new blog</Link>
           </li>,
@@ -27,11 +33,8 @@ class Header extends Component {
   render() {
     return (
       <nav>
-        <div className="nav-wrapper #0d47a1 blue darken-4">
-          <Link
-            to={this.props.auth ? "/allBlogs" : "/"}
-            className="left brand-logo"
-          >
+        <div className="nav-wrapper #0d47a1 blue darken-4 ">
+          <Link to={"/"} className="left brand-logo">
             Blogify
           </Link>
           <ul className="right">{this.contentRenderer()}</ul>

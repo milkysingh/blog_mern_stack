@@ -81,11 +81,20 @@ const removeBlog = async payload => {
     throw error;
   }
 };
+const findBlogsByTag = async tags => {
+  try {
+    const blogs = await Blog.find({ tag: { $in: tags } });
+    return blogs;
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   findUser,
   addNewUser,
   addNewBlog,
   getAllBlogs,
   findBlog,
-  removeBlog
+  removeBlog,
+  findBlogsByTag
 };
