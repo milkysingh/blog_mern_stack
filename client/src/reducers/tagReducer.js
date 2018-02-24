@@ -2,20 +2,21 @@ import actionTypes from "../actions/types";
 export default (state = [], action) => {
   switch (action.type) {
     case actionTypes.SELECTED_TAGS:
-      const selectedTags = [...state];
-      const tagExist = selectedTags.findIndex(tag => {
-        return tag === action.payload;
-      });
+      // const selectedTags = [...state];
+      // const tagExist = selectedTags.findIndex(tag => {
+      //   return tag === action.payload;
+      // });
 
-      if (tagExist === -1) {
-        selectedTags.push(action.payload);
+      // if (tagExist === -1) {
+      //   selectedTags.push(action.payload);
 
-        return selectedTags;
-      }
+      //   return selectedTags;
+      // }
 
-      selectedTags.splice(tagExist, 1);
+      // selectedTags.splice(tagExist, 1);
 
-      return selectedTags;
+      // return selectedTags;
+      return action.payload;
 
     default:
       return state;

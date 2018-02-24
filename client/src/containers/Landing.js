@@ -10,14 +10,11 @@ class Landing extends Component {
     isFetching: true,
     error: null
   };
-
-  tagClickHandler = async tag => {
-    await this.props.selectTags(tag);
+  TAGS = [];
+  fetchBlogsByTag = async () => {
     try {
-      const blogsByTag = await axios.get(
-        `/api/fetchBlogs/?tags=${this.props.tags}`
-      );
-      console.log(blogsByTag.data);
+      const blogsByTag = await axios.get(`/api/fetchBlogs/?tags=${this.TAGS}`);
+
       this.setState({
         blogsByTag: blogsByTag.data,
         isFetching: false
@@ -29,6 +26,18 @@ class Landing extends Component {
       });
     }
   };
+  tagClickHandler = async newTag => {
+    const tagExist = this.TAGS.findIndex(tag => {
+      return tag === newTag;
+    });
+    if (tagExist === -1) {
+      this.TAGS.push(newTag);
+    } else {
+      this.TAGS.splice(tagExist, 1);
+    }
+
+    this.fetchBlogsByTag();
+  };
 
   renderBlogsHandler = () => {
     return this.state.blogsByTag.map(blog => {
@@ -39,8 +48,13 @@ class Landing extends Component {
       );
     });
   };
+
   async componentDidMount() {
-    await axios.get(`/api/fetchBlogs/?tags=${this.props.tags}`);
+    this.TAGS = [...this.props.tags];
+    this.fetchBlogsByTag();
+  }
+  componentWillUnmount() {
+    this.props.selectTags(this.TAGS);
   }
   render() {
     return (
